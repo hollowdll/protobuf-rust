@@ -1,0 +1,27 @@
+// Employees schema.
+// Blazing fast structured data format.
+// Up to 5 times faster than JSON.
+
+syntax = "proto3";
+package employees;
+
+message Employee {
+  int32 id = 1;
+  int32 age = 2;
+  string name = 3;
+  string email = 4;
+  // Boss doesn't necessarily have a boss
+  optional Employee boss = 5;
+
+  enum WorkType {
+    REMOTE = 0;
+    OFFICE = 1;
+    HYBRID = 2;
+  }
+
+  WorkType work_type = 6;
+}
+
+message EmployeeList {
+  repeated Employee employees = 1;
+}

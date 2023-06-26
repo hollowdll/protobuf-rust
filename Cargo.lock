@@ -260,6 +260,7 @@ dependencies = [
 name = "protobuf-rust"
 version = "0.1.0"
 dependencies = [
+ "bytes",
  "prost",
  "prost-build",
 ]

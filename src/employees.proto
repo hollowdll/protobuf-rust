@@ -1,6 +1,4 @@
-// Employees schema.
-// Blazing fast structured data format.
-// Up to 5 times faster than JSON.
+// Protocol Buffers data schema
 
 syntax = "proto3";
 package employees;
@@ -10,7 +8,6 @@ message Employee {
   uint32 age = 2;
   string name = 3;
   string email = 4;
-  // Boss doesn't necessarily have a boss
   optional Employee boss = 5;
 
   enum WorkType {

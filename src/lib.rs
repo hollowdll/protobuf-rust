@@ -1,3 +1,6 @@
+// Protocol Buffers implementation.
+// See `employee_json` module for JSON implementation.
+
 use std::{
     io::{
         Cursor,
@@ -13,12 +16,13 @@ use prost::{
     DecodeError,
 };
 
-mod employee_json;
+pub mod employee_json;
 
 const FILE_PATH: &str = "employee_buffer.txt";
 const LIST_FILE_PATH: &str = "employee_list.txt";
 
 // Include generated Rust code which is generated from employees.proto.
+// The code is generated at compile time.
 pub mod employees {
     include!(concat!(env!("OUT_DIR"), "/employees.rs"));
 }
@@ -37,6 +41,11 @@ pub fn create_employee_populated() -> employees::Employee {
 /// Creates a new employee with default values.
 pub fn create_employee() -> employees::Employee {
     employees::Employee::default()    
+}
+
+/// Creates a new employee list with default values.
+pub fn create_employee_list() -> employees::EmployeeList {
+    employees::EmployeeList::default()
 }
 
 /// Serializes employee and encodes it to a buffer.

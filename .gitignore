@@ -1,3 +1,6 @@
 /target
 **/*.rs.bk
-/**/employee_buffer.*
+/**/employee_buffer.txt
+/**/employee_list.txt
+/**/employee_list.json
+

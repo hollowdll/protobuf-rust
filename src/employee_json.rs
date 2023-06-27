@@ -1,4 +1,6 @@
-// Data structures for JSON
+// Data structures for JSON implementation
+
+#![allow(unused)]
 
 use std::fs::{self, File};
 use std::io::{self, Write};
@@ -38,7 +40,7 @@ pub enum WorkType {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct EmployeeList {
-    employees: Vec<Employee>,
+    pub employees: Vec<Employee>,
 }
 
 impl EmployeeList {
@@ -53,6 +55,11 @@ pub fn create_employee() -> Employee {
     Employee::new()
 }
 
+pub fn create_employee_list() -> EmployeeList {
+    EmployeeList::new()
+}
+
+/// Writes employee list as JSON to a file.
 pub fn write_employee_list_json(employee_list: &EmployeeList) -> io::Result<()> {
     let json = serde_json::to_string_pretty(&employee_list)?;
     let mut file = File::create(FILE_PATH)?;
@@ -61,6 +68,7 @@ pub fn write_employee_list_json(employee_list: &EmployeeList) -> io::Result<()> 
     Ok(())
 }
 
+/// Reads employee list as JSON from a file.
 pub fn read_emloyee_list_json() -> io::Result<EmployeeList> {
     let contents = fs::read_to_string(FILE_PATH)?;
     let employee_list: EmployeeList = serde_json::from_str(contents.as_str())?;

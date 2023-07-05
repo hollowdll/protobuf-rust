@@ -27,3 +27,21 @@ cd protobuf-rust
 ```bash
 cargo run
 ```
+
+# Usage
+
+Creates a given number of employee instances both in Protocol Buffers format and JSON format.
+
+Writes them to files and reads them. After this the program shows how long it took for each to complete.
+
+```bash
+cargo run -- --help
+```
+
+To change the number of created employees for better demonstration.
+
+```bash
+cargo run -- -e <NUMBER OF EMPLOYEES>
+```
+
+NOTE! Try to change the number to over 10000 to see better results.

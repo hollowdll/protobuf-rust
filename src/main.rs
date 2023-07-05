@@ -14,16 +14,18 @@ const EMPLOYEE_COUNT: u16 = 10000;
 // Protocol Buffers write and read
 fn protocol_buffers() {
     let start_time = Instant::now();
-    let mut employee_list = create_employee_list();
+    let mut employee_list = employee_pb::create_employee_list();
     
     println!("\nCreating {} employees...", EMPLOYEE_COUNT);
     for _ in 0..EMPLOYEE_COUNT {
-        employee_list.employees.push(create_employee());
+        employee_list.employees.push(employee_pb::create_employee());
     }
 
     println!("Writing employee list to file and reading it...");
-    write_employee_list_to_file(&serialize_employee_list(&employee_list));
-    let employee_list_read = read_employee_list_from_file();
+    employee_pb::write_employee_list_to_file(
+        &employee_pb::serialize_employee_list(&employee_list)
+    );
+    let employee_list_read = employee_pb::read_employee_list_from_file();
     println!("First employee: {:?}", employee_list_read.employees.get(0).unwrap());
 
     let elapsed = start_time.elapsed();

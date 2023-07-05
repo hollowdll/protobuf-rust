@@ -3,6 +3,6 @@
 use std::io::Result;
 
 fn main() -> Result<()> {
-    prost_build::compile_protos(&["src/employees.proto"], &["src/"])?;
+    prost_build::compile_protos(&["src/proto/employees.proto"], &["src/proto"])?;
     Ok(())
 }

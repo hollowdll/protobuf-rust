@@ -7,17 +7,24 @@
 
 use protobuf_rust::*;
 use std::time::Instant;
+use clap::Parser;
 
 // Change this to see more accurate results.
-const EMPLOYEE_COUNT: u16 = 10000;
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// Number of employees to create
+    #[arg(short, long, default_value_t = 1000)]
+    employee_count: u16,
+}
 
 // Protocol Buffers write and read
-fn protocol_buffers() {
+fn protocol_buffers(employee_count: u16) {
     let start_time = Instant::now();
     let mut employee_list = employee_pb::create_employee_list();
     
-    println!("\nCreating {} employees...", EMPLOYEE_COUNT);
-    for _ in 0..EMPLOYEE_COUNT {
+    println!("\nCreating {} employees...", employee_count);
+    for _ in 0..employee_count {
         employee_list.employees.push(employee_pb::create_employee());
     }
 
@@ -33,12 +40,12 @@ fn protocol_buffers() {
 }
 
 // JSON write and read
-fn json() {
+fn json(employee_count: u16) {
     let start_time = Instant::now();
     let mut employee_list = employee_json::create_employee_list();
 
-    println!("\nCreating {} employees...", EMPLOYEE_COUNT);
-    for _ in 0..EMPLOYEE_COUNT {
+    println!("\nCreating {} employees...", employee_count);
+    for _ in 0..employee_count {
         employee_list.employees.push(employee_json::create_employee());
     }
 
@@ -52,7 +59,9 @@ fn json() {
 }
 
 fn main() {
-    protocol_buffers();
-    json();
+    let args = Args::parse();
+
+    protocol_buffers(args.employee_count);
+    json(args.employee_count);
     println!();
 }

@@ -63,7 +63,7 @@ pub fn create_employee_list() -> EmployeeList {
 pub fn write_employee_list_json(employee_list: &EmployeeList) -> io::Result<()> {
     let json = serde_json::to_string_pretty(&employee_list)?;
     let mut file = File::create(FILE_PATH)?;
-    file.write(json.as_bytes())?;
+    file.write_all(json.as_bytes())?;
 
     Ok(())
 }

@@ -71,7 +71,7 @@ pub fn deserialize_employee_list(buf: &[u8]) -> Result<employees::EmployeeList, 
 /// Writes employee as buffer to a file.
 pub fn write_employee_to_file(buf: &[u8]) {
     let mut file = File::create(FILE_PATH).unwrap();
-    file.write(buf).unwrap();
+    file.write_all(buf).unwrap();
 }
 
 /// Reads employee as buffer from a file.
@@ -85,7 +85,7 @@ pub fn read_employee_from_file() -> employees::Employee {
 /// Writes employee list as buffer to a file.
 pub fn write_employee_list_to_file(buf: &[u8]) {
     let mut file = File::create(LIST_FILE_PATH).unwrap();
-    file.write(buf).unwrap();
+    file.write_all(buf).unwrap();
 }
 
 /// Reads employee list as buffer from a file.

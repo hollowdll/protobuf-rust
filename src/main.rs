@@ -9,7 +9,6 @@ use protobuf_rust::*;
 use std::time::Instant;
 use clap::Parser;
 
-// Change this to see more accurate results.
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
@@ -19,7 +18,7 @@ struct Args {
 }
 
 // Protocol Buffers write and read
-fn protocol_buffers(employee_count: u16) {
+fn protocol_buffers(employee_count: u16) -> f64 {
     let start_time = Instant::now();
     let mut employee_list = employee_pb::create_employee_list();
     
@@ -35,12 +34,14 @@ fn protocol_buffers(employee_count: u16) {
     let employee_list_read = employee_pb::read_employee_list_from_file();
     println!("First employee: {:?}", employee_list_read.employees.get(0).unwrap());
 
-    let elapsed = start_time.elapsed();
-    println!("[Protocol Buffers] Time elapsed as seconds: {}", elapsed.as_secs_f64());
+    let elapsed = start_time.elapsed().as_secs_f64();
+    println!("[Protocol Buffers] Time elapsed as seconds: {}", elapsed);
+
+    return elapsed
 }
 
 // JSON write and read
-fn json(employee_count: u16) {
+fn json(employee_count: u16) -> f64 {
     let start_time = Instant::now();
     let mut employee_list = employee_json::create_employee_list();
 
@@ -54,14 +55,18 @@ fn json(employee_count: u16) {
     let employee_list_read = employee_json::read_emloyee_list_json().unwrap();
     println!("First employee: {:?}", employee_list_read.employees.get(0).unwrap());
 
-    let elapsed = start_time.elapsed();
-    println!("[JSON] Time elapsed as seconds: {}", elapsed.as_secs_f64());
+    let elapsed = start_time.elapsed().as_secs_f64();
+    println!("[JSON] Time elapsed as seconds: {}", elapsed);
+
+    return elapsed
 }
 
 fn main() {
     let args = Args::parse();
 
-    protocol_buffers(args.employee_count);
-    json(args.employee_count);
-    println!();
+    let pb_seconds = protocol_buffers(args.employee_count);
+    let json_seconds = json(args.employee_count);
+    let difference = json_seconds / pb_seconds;
+
+    println!("\nProtocol Buffers was {} times faster than JSON\n", difference);
 }
